@@ -42,15 +42,9 @@ module Crime =
 
 [<AutoOpen>]
 module Weather =
-    type MetaWeatherSearch = JsonProvider<"https://www.metaweather.com/api/location/search/?lattlong=51.5074,0.1278">
-    type MetaWeatherLocation = JsonProvider<"https://www.metaweather.com/api/location/1393672">
+    let apikey = "822db6c256f52c3dcf228f4ea4a162ff"
+    type MetaWeatherSearch = JsonProvider<"https://api.openweathermap.org/data/2.5/weather?lat=51.5074&lon=0.1278&appid=822db6c256f52c3dcf228f4ea4a162ff">
     let getWeatherForPosition location = async {
-        let! locations =
-            (location.Latitude, location.Longitude)
-            ||> sprintf "https://www.metaweather.com/api/location/search/?lattlong=%f,%f"
-            |> MetaWeatherSearch.AsyncLoad
-        let bestLocationId = locations |> Array.sortBy (fun t -> t.Distance) |> Array.map (fun o -> o.Woeid) |> Array.head
         return!
-            bestLocationId
-            |> sprintf "https://www.metaweather.com/api/location/%d"
-            |> MetaWeatherLocation.AsyncLoad }
+            sprintf "https://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&appid=%s" location.Latitude location.Longitude apikey
+            |> MetaWeatherSearch.AsyncLoad }

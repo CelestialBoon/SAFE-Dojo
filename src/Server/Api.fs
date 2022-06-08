@@ -29,14 +29,14 @@ let getCrimeReport postcode = async {
     return crimes
 }
 
-let private asWeatherResponse (weather: Weather.MetaWeatherLocation.Root) =
-    { WeatherType =
-        weather.ConsolidatedWeather
-        |> Array.countBy(fun w -> w.WeatherStateName)
-        |> Array.maxBy snd
-        |> fst
-        |> WeatherType.Parse
-      AverageTemperature = weather.ConsolidatedWeather |> Array.averageBy(fun r -> float r.TheTemp) }
+// let private asWeatherResponse (weather: Weather.MetaWeatherSearch.Root) =
+//     { WeatherType =
+//         weather.ConsolidatedWeather
+//         |> Array.countBy(fun w -> w.WeatherStateName)
+//         |> Array.maxBy snd
+//         |> fst
+//         |> WeatherType.Parse
+//       AverageTemperature = weather.ConsolidatedWeather |> Array.averageBy(fun r -> float r.TheTemp) }
 
 let getWeather postcode = async {
     (* Task 4.1 WEATHER: Implement a function that retrieves the weather for
